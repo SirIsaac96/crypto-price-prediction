@@ -1,5 +1,0 @@
-yfinance==0.2.30
-datetime==5.2
-streamlit==1.27.0
-plotly==5.17.0
-numpy==1.26.0
