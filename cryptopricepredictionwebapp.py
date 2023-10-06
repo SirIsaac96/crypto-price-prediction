@@ -1,4 +1,7 @@
 # Import necessary libraries
+import subprocess
+# Install yfinance
+subprocess.call(["pip", "install", "yfinance"])
 import streamlit as st # for creating crypto price web app
 import datetime as date
 import yfinance as yf
