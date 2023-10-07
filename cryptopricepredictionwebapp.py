@@ -53,7 +53,7 @@ plot_raw_data()
 st.subheader('Forecast Crypto Close Price using GRU')
 
 # Load the trained GRU model using load_model() function from Tensforflow Keras
-gru_model = tf.keras.models.load_model('C:/Users/ISAAC OTOM/OneDrive/Desktop/trained_gru_model.h5')
+gru_model = tf.keras.models.load_model('C:Trained models/trained_gru_model.h5')
 
 # Standardize the input data using MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
