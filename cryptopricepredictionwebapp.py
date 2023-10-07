@@ -13,7 +13,7 @@ today = date.datetime.today().strftime('%Y-%m-%d')
 
 # Streamlit Web App
 # Give the web app a title
-st.title('Crypto Close Price Prediction Web App')
+st.title('Crypto Close Price Prediction Using GRU Model')
 
 coins = ('BTC-USD', 'USDT-USD', 'LTC-USD', 'XRP-USD', 'ETH-USD')
 
