@@ -50,42 +50,88 @@ def plot_raw_data():
 # call the function
 plot_raw_data()
 
-# Forecasting Crypto Close Price using GRU
-st.subheader('Forecast Crypto Close Price using GRU')
+# Forecasting Crypto Close Price using GRU Model
+st.subheader('Forecasting Crypto Close Price using GRU Model')
 
-# Load the trained GRU model using load_model() function from Tensforflow Keras
-gru_model = tf.keras.models.load_model('trained_gru_model.h5')
+# Load the trained GRU models using load_model() function from Tensforflow Keras
+gru_model_daily = tf.keras.models.load_model('trained_gru_model_daily.h5')
+gru_model_weekly = tf.keras.models.load_model('trained_gru_model_weekly.h5')
+gru_model_monthly = tf.keras.models.load_model('trained_gru_model_monthly.h5')
 
 # Standardize the input data using MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
 data_scaled = sc.fit_transform(data[['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']])
 
 # Function to create sequences for forecasting
-def create_forecasting_sequences(data_scaled, target_col_index, n_steps, forecast_steps):
+def create_forecasting_sequences(data_scaled, target_col_index, n_tsteps, forecast_steps):
     x_seq, y_seq = [], []
-    for i in range(len(data_scaled) - n_steps - forecast_steps, len(data_scaled) - n_steps):
-        x_seq.append(data_scaled[i:i + n_steps, :])
-        y_seq.append(data_scaled[i + n_steps, target_col_index])
+    for i in range(len(data_scaled) - n_tsteps - forecast_steps, len(data_scaled) - n_tsteps):
+        x_seq.append(data_scaled[i:i + n_tsteps, :])
+        y_seq.append(data_scaled[i + n_tsteps, target_col_index])
     return np.array(x_seq), np.array(y_seq)
 
-# Sequences for forecasting
-n_tsteps = 1  # Number of time steps in each input sequence
 features = 6  # Number of columns/features in each time step
 target_col_index = 3 # 'Close' price is the target column
-forecast_steps = 1 # forecast step for today
-x_forecast, y_forecast = create_forecasting_sequences(data_scaled, target_col_index, n_tsteps, forecast_steps)
+
+# Sequences for daily forecasting
+n_tsteps_daily = 1  # Number of time steps in each input sequence
+forecast_steps_daily = 1 # daily forecast steps
+x_forecast_daily, y_forecast_daily = create_forecasting_sequences(data_scaled, target_col_index, 
+                                                                  n_tsteps_daily, forecast_steps_daily)
 
 # Reshape the input data to fit the model's input shape
-x_forecast = np.reshape(x_forecast, (x_forecast.shape[0], n_tsteps, features))
+x_forecast_daily = np.reshape(x_forecast_daily, (x_forecast_daily.shape[0], n_tsteps_daily, features))
 
-# Make predictions for today using the GRU model
-today_prediction = gru_model.predict(x_forecast)[0, 0]
+# Make daily predictions using the GRU model
+daily_prediction = gru_model_daily.predict(x_forecast_daily)[0, 0]
 
-# Inverse transform the forecast prediction to get the actual price
-today_price = sc.inverse_transform(np.hstack((data_scaled[-1, :target_col_index].reshape(1, -1),
-                                              np.array([[today_prediction]]),
+# Inverse transform the predicted price to get the actual price
+daily_price = sc.inverse_transform(np.hstack((data_scaled[-1, :target_col_index].reshape(1, -1),
+                                              np.array([[daily_prediction]]),
                                               data_scaled[-1, target_col_index + 1:].reshape(1, -1))))[:, target_col_index]
 
-# Display forecast prediction for today
-st.write("Today's Forecasted Close Price ($):")
-st.write(today_price)
+# Display daily forecasted close price in $
+st.write("Daily Forecasted Close Price ($):")
+st.write(daily_price)
+
+# Sequences for weekly forecasting
+n_tsteps_weekly = 7  # Number of time steps in each input sequence
+forecast_steps_weekly = 7  # weekly forecast steps
+x_forecast_weekly, y_forecast_weekly = create_forecasting_sequences(data_scaled, target_col_index, 
+                                                                    n_tsteps_weekly, forecast_steps_weekly)
+
+# Reshape the input data to fit the model's input shape
+x_forecast_weekly = np.reshape(x_forecast_weekly, (x_forecast_weekly.shape[0], n_tsteps_weekly, features))
+
+# Make weekly predictions using the GRU model
+weekly_prediction = gru_model_weekly.predict(x_forecast_weekly)[0, 0]
+
+# Inverse transform the forecast predictions to get the actual prices
+weekly_price = sc.inverse_transform(np.hstack((data_scaled[-7, :target_col_index].reshape(1, -1),
+                                                np.array([[weekly_prediction]]),
+                                                data_scaled[-7, target_col_index + 1:].reshape(1, -1))))[:, target_col_index]
+
+# Display weekly forecasted close price in $
+st.write("Weekly Forecasted Close Prices ($):")
+st.write(weekly_price)
+
+# Sequences for monthly forecasting
+n_tsteps_monthly = 30  # Number of time steps in each input sequence
+forecast_steps_monthly = 30  # monthly forecast steps
+x_forecast_monthly, y_forecast_monthly = create_forecasting_sequences(data_scaled, target_col_index, 
+                                                                    n_tsteps_monthly, forecast_steps_monthly)
+
+# Reshape the input data to fit the model's input shape
+x_forecast_monthly = np.reshape(x_forecast_monthly, (x_forecast_monthly.shape[0], n_tsteps_monthly, features))
+
+# Make monthly predictions using the GRU model
+monthly_prediction = gru_model_monthly.predict(x_forecast_monthly)[0, 0]
+
+# Inverse transform the forecast predictions to get the actual prices
+monthly_price = sc.inverse_transform(np.hstack((data_scaled[-30, :target_col_index].reshape(1, -1),
+                                                np.array([[monthly_prediction]]),
+                                                data_scaled[-30, target_col_index + 1:].reshape(1, -1))))[:, target_col_index]
+
+# Display monthly forecasted close price in $
+st.write("Monthly Forecasted Close Prices ($):")
+st.write(monthly_price)
