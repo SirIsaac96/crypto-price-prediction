@@ -112,7 +112,7 @@ weekly_price = sc.inverse_transform(np.hstack((data_scaled[-7, :target_col_index
                                                 data_scaled[-7, target_col_index + 1:].reshape(1, -1))))[:, target_col_index]
 
 # Display weekly forecasted close price in $
-st.write("Weekly Forecasted Close Prices ($):")
+st.write("Weekly Forecasted Close Price ($):")
 st.write(weekly_price)
 
 # Sequences for monthly forecasting
@@ -133,5 +133,5 @@ monthly_price = sc.inverse_transform(np.hstack((data_scaled[-30, :target_col_ind
                                                 data_scaled[-30, target_col_index + 1:].reshape(1, -1))))[:, target_col_index]
 
 # Display monthly forecasted close price in $
-st.write("Monthly Forecasted Close Prices ($):")
+st.write("Monthly Forecasted Close Price ($):")
 st.write(monthly_price)
