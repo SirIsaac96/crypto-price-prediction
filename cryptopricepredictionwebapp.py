@@ -52,7 +52,7 @@ def plot_raw_data():
 plot_raw_data()
 
 # Forecasting Crypto Close Price using GRU Model
-st.subheader('Forecasting Crypto Close Price using GRU Model')
+st.subheader('GRU Model Forecasted Crypto Close Prices')
 
 # Load the trained GRU models using load_model() function from Tensforflow Keras
 gru_model_daily = tf.keras.models.load_model('trained_gru_model_daily.h5')
