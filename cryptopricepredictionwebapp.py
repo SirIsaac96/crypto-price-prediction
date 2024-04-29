@@ -38,7 +38,7 @@ data_load_state.text('Loading data...done!')
 # raw pandas dataframe
 st.subheader('Raw data')
 st.write('Last 5 rows of raw data')
-st.write(data.tail())  # tail of the dataframe  
+st.write(data.tail(10))  # last 10 rows of the dataframe  
 
 # plot the raw data
 def plot_raw_data():
