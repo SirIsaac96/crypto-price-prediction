@@ -34,7 +34,7 @@ data = load_data(selected_coin)
 # reset the text
 data_load_state.text('Loading data...done!')
 
-# Plot raw the data
+# Plot the raw data
 # raw pandas dataframe
 st.subheader('Raw data')
 st.write('Last 5 rows of raw data')
