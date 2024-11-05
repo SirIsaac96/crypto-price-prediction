@@ -15,7 +15,7 @@ today = date.datetime.today().strftime('%Y-%m-%d')
 # Give the web app a title
 st.title('Crypto Close Price Prediction Web App')
 
-# Define cryptocurrencies
+# Define the cryptocurrencies
 coins = ('BTC-USD', 'USDT-USD', 'LTC-USD', 'XRP-USD', 'ETH-USD')
 
 # Create a select box to select between the different coins
