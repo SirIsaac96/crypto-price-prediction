@@ -47,7 +47,7 @@ def plot_raw_data():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = data['Date'], y = data['Open'], name = 'Crypto_Open', line = dict(color = 'red')))
     fig.add_trace(go.Scatter(x = data['Date'], y = data['Close'], name = 'Crypto_Close', line = dict(color = 'blue')))
-    fig.layout.update(title_text = 'Crypto Price Data', xaxis_rangeslider_visible = True)
+    fig.layout.update(title_text = 'Crypto Market Behavior Over Time', xaxis_rangeslider_visible = True)
     st.plotly_chart(fig)
 
 # call the function
