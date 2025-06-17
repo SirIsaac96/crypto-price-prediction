@@ -58,9 +58,9 @@ st.subheader('Forecasting Crypto Close Price using GRU Model')
 
 # Load the trained GRU models using load_model() function from Tensforflow Keras
 # gru_model_daily = tf.keras.models.load_model('C:/Trained models/trained_gru_model.h5')
-gru_model_daily = tf.keras.models.load_model('C:/Users/SirIsaac/My Drive/Desktop/MyOtherFiles/Trained models/trained_gru_model_daily.keras')
-gru_model_weekly = tf.keras.models.load_model('C:/Users/SirIsaac/My Drive/Desktop/MyOtherFiles/Trained models/trained_gru_model_weekly.keras')
-gru_model_monthly = tf.keras.models.load_model('C:/Users/SirIsaac/My Drive/Desktop/MyOtherFiles/Trained models/trained_gru_model_monthly.keras')
+gru_model_daily = tf.keras.models.load_model('trained_gru_model_daily.keras')
+gru_model_weekly = tf.keras.models.load_model('trained_gru_model_weekly.keras')
+gru_model_monthly = tf.keras.models.load_model('trained_gru_model_monthly.keras')
 
 # Standardize the input data using MinMaxScaler
 sc = MinMaxScaler(feature_range = (0, 1))
